@@ -1,0 +1,536 @@
+{
+    "title": "CP-ticket",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 1158,
+            "height": 1000,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "url": "https://www.cp.pt/en/mycp",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "https://www.cp.pt/en/mycp",
+                    "title": "myCP - Personal Area | CP - Comboios de Portugal"
+                }
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Begin"
+                ],
+                [
+                    "div.breadcrumb-custom-container a"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[1]/nav/span[1]/a"
+                ],
+                [
+                    "pierce/div.breadcrumb-custom-container a"
+                ],
+                [
+                    "text/Begin"
+                ]
+            ],
+            "offsetY": 11,
+            "offsetX": 27,
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "https://www.cp.pt/",
+                    "title": ""
+                }
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/From *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r3\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r3:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r3\\:"
+                ]
+            ],
+            "offsetY": 27,
+            "offsetX": 137.984375
+        },
+        {
+            "type": "change",
+            "value": "origin-station-placeholder",
+            "selectors": [
+                [
+                    "aria/From *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r3\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r3:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r3\\:"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Lisboa Santa Apolonia",
+                    "aria/[role=\"generic\"]"
+                ],
+                [
+                    "#react-autowhatever-\\:r3\\:--item-2 > div"
+                ],
+                [
+                    "xpath///*[@id=\"react-autowhatever-:r3:--item-2\"]/div"
+                ],
+                [
+                    "pierce/#react-autowhatever-\\:r3\\:--item-2 > div"
+                ],
+                [
+                    "text/Lisboa Santa"
+                ]
+            ],
+            "offsetY": 15,
+            "offsetX": 116.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/To *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r4\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r4:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r4\\:"
+                ]
+            ],
+            "offsetY": 23,
+            "offsetX": 131.984375
+        },
+        {
+            "type": "change",
+            "value": "destination-station-placeholder",
+            "selectors": [
+                [
+                    "aria/To *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r4\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r4:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r4\\:"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Entroncamento",
+                    "aria/[role=\"generic\"]"
+                ],
+                [
+                    "#react-autowhatever-\\:r4\\: div"
+                ],
+                [
+                    "xpath///*[@id=\"react-autowhatever-:r4:--item-0\"]/div"
+                ],
+                [
+                    "pierce/#react-autowhatever-\\:r4\\: div"
+                ],
+                [
+                    "text/Entroncamento"
+                ]
+            ],
+            "offsetY": 9,
+            "offsetX": 131.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Date"
+                ],
+                [
+                    "#ida"
+                ],
+                [
+                    "xpath///*[@id=\"ida\"]"
+                ],
+                [
+                    "pierce/#ida"
+                ],
+                [
+                    "text/31/08/2026"
+                ]
+            ],
+            "offsetY": 26,
+            "offsetX": 85.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Choose Tuesday, September 1st, 2026"
+                ],
+                [
+                    "div:nth-of-type(6) > div.react-datepicker__day--001"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[1]/div/div/div/div/div[2]/form/div[2]/div/div[3]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[6]/div[3]"
+                ],
+                [
+                    "pierce/div:nth-of-type(6) > div.react-datepicker__day--001"
+                ]
+            ],
+            "offsetY": 16.0625,
+            "offsetX": 5.015625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Search trips"
+                ],
+                [
+                    "div.pesquisa-de-viagens__content__controls__form__search-info > button"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[1]/div/div/div/div/div[2]/form/div[2]/button"
+                ],
+                [
+                    "pierce/div.pesquisa-de-viagens__content__controls__form__search-info > button"
+                ]
+            ],
+            "offsetY": 21,
+            "offsetX": 57.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Select departure from 06:30 to 07:32"
+                ],
+                [
+                    "li:nth-of-type(3) > div.search-results-page__results-list__result-item__footer > button"
+                ],
+                [
+                    "xpath///*[@id=\":r8:\"]/div/div/div/ul/li[3]/div[3]/button"
+                ],
+                [
+                    "pierce/li:nth-of-type(3) > div.search-results-page__results-list__result-item__footer > button"
+                ]
+            ],
+            "offsetY": 29,
+            "offsetX": 587
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Buy this trip (opens new modal window)"
+                ],
+                [
+                    "div.search-results-page__footer > button"
+                ],
+                [
+                    "xpath///*[@id=\"buyTripNavBar\"]"
+                ],
+                [
+                    "pierce/div.search-results-page__footer > button"
+                ],
+                [
+                    "text/Buy"
+                ]
+            ],
+            "offsetY": 22,
+            "offsetX": 55
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "div.modal-footer span"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[3]/div/div[3]/div[2]/label/span"
+                ],
+                [
+                    "pierce/div.modal-footer span"
+                ]
+            ],
+            "offsetY": 11,
+            "offsetX": 22
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Confirm: I have read and accept the Online Ticket Office Sales Conditions. I have read and accept the Terms and Privacy Policy. I am over 16 years old."
+                ],
+                [
+                    "#checkbox-\\:rb\\:"
+                ],
+                [
+                    "xpath///*[@id=\"checkbox-:rb:\"]"
+                ],
+                [
+                    "pierce/#checkbox-\\:rb\\:"
+                ]
+            ],
+            "offsetY": 5,
+            "offsetX": 22
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Proceed to purchase"
+                ],
+                [
+                    "div.modal-footer > button"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[3]/div/div[3]/button"
+                ],
+                [
+                    "pierce/div.modal-footer > button"
+                ],
+                [
+                    "text/Proceed to purchase"
+                ]
+            ],
+            "offsetY": 20,
+            "offsetX": 184
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Discount *",
+                    "aria/[role=\"image\"]"
+                ],
+                [
+                    "div:nth-of-type(4) img"
+                ],
+                [
+                    "xpath///*[@id=\"select-:rj:\"]/img"
+                ],
+                [
+                    "pierce/div:nth-of-type(4) img"
+                ]
+            ],
+            "offsetY": 12,
+            "offsetX": 13
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Rail Green Pass"
+                ],
+                [
+                    "#select-option-\\:rj\\:-2"
+                ],
+                [
+                    "xpath///*[@id=\"select-option-:rj:-2\"]"
+                ],
+                [
+                    "pierce/#select-option-\\:rj\\:-2"
+                ],
+                [
+                    "text/Rail Green Pass"
+                ]
+            ],
+            "offsetY": 17,
+            "offsetX": 267
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Additional information *"
+                ],
+                [
+                    "#input-\\:rp\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:rp:\"]"
+                ],
+                [
+                    "pierce/#input-\\:rp\\:"
+                ]
+            ],
+            "offsetY": 31,
+            "offsetX": 88
+        },
+        {
+            "type": "change",
+            "value": "additional-info-placeholder",
+            "selectors": [
+                [
+                    "aria/Additional information *"
+                ],
+                [
+                    "#input-\\:rp\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:rp:\"]"
+                ],
+                [
+                    "pierce/#input-\\:rp\\:"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "#\\:re\\: div:nth-of-type(5) > div:nth-of-type(2)"
+                ],
+                [
+                    "xpath///*[@id=\":re:\"]/div/div/div/div[1]/form/div[1]/div[1]/div[2]/div[5]/div[2]"
+                ],
+                [
+                    "pierce/#\\:re\\: div:nth-of-type(5) > div:nth-of-type(2)"
+                ]
+            ],
+            "offsetY": 19,
+            "offsetX": 241
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Next"
+                ],
+                [
+                    "button.button-custom-primary"
+                ],
+                [
+                    "xpath///*[@id=\":re:\"]/div/div/div/div[1]/form/div[2]/button[2]"
+                ],
+                [
+                    "pierce/button.button-custom-primary"
+                ],
+                [
+                    "text/Next"
+                ]
+            ],
+            "offsetY": 32,
+            "offsetX": 747
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Next"
+                ],
+                [
+                    "button.button-custom-primary"
+                ],
+                [
+                    "xpath///*[@id=\"confirm-places\"]/div/div[2]/button[2]"
+                ],
+                [
+                    "pierce/button.button-custom-primary"
+                ],
+                [
+                    "text/Next"
+                ]
+            ],
+            "offsetY": 32.375,
+            "offsetX": 89
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Proceed to payment"
+                ],
+                [
+                    "div.modal-confirmation-place__nextBtn-container > button"
+                ],
+                [
+                    "xpath///*[@id=\":re:\"]/div/div/div/div[1]/div[2]/div/div[2]/button"
+                ],
+                [
+                    "pierce/div.modal-confirmation-place__nextBtn-container > button"
+                ],
+                [
+                    "text/Proceed to payment"
+                ]
+            ],
+            "offsetY": 22.375,
+            "offsetX": 103.40625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Confirm"
+                ],
+                [
+                    "button.button-custom-primary"
+                ],
+                [
+                    "xpath///*[@id=\":re:\"]/div/div/div/div[2]/div/div[3]/div[2]/button[2]"
+                ],
+                [
+                    "pierce/button.button-custom-primary"
+                ]
+            ],
+            "offsetY": 26.390625,
+            "offsetX": 597
+        }
+    ]
+}
