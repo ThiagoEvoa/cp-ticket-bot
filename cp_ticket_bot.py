@@ -1122,8 +1122,11 @@ def is_search_trips_click(step: dict) -> bool:
 def is_final_confirm_click(step: dict) -> bool:
     if step.get("type") != "click":
         return False
-    selectors = flatten_selectors(step.get("selectors", []))
-    return "aria/Confirm" in selectors
+    return any(
+        item.strip() == "aria/Confirm"
+        for chain in step.get("selectors", [])
+        for item in chain
+    )
 
 
 def is_buy_trip_click(step: dict) -> bool:
@@ -1305,7 +1308,7 @@ def click_discount_trigger(page: Page, selectors: list[list[str]]) -> None:
             for (const label of labels) {
               const root = label.closest('div, form, section') || label.parentElement;
               const target = root?.querySelector(
-                '[id^="select-"], [aria-label*="Discount" i], [aria-label*="Desconto" i], '
+                '[id^="select-"], [aria-label*="Discount" i], [aria-label*="Desconto" i], ' +
                 '[role="combobox"]'
               );
               if (target && isVisible(target)) { target.click(); return true; }
