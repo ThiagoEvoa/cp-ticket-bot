@@ -26,6 +26,26 @@
             "target": "main",
             "selectors": [
                 [
+                    "aria/myCP profile"
+                ],
+                [
+                    "#menu-tabs-tabpane-Passengers button"
+                ],
+                [
+                    "xpath///*[@id=\"menu-tabs-tabpane-Passengers\"]/nav[2]/div/button"
+                ],
+                [
+                    "pierce/#menu-tabs-tabpane-Passengers button"
+                ]
+            ],
+            "offsetY": 18,
+            "offsetX": 30.15625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
                     "aria/Email"
                 ],
                 [
