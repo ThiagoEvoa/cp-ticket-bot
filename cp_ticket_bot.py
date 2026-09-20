@@ -1276,8 +1276,6 @@ def click_discount_trigger(page: Page, selectors: list[list[str]]) -> None:
         page.locator("label:has-text('Discount') + div").first,
         page.locator("label:has-text('Desconto') + div").first,
         page.locator("xpath=(//*[contains(translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'discount') or contains(translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'desconto')]/following::*[self::div or self::button][1])[1]").first,
-        page.locator("[role='combobox']").first,
-        page.locator("[aria-haspopup='listbox']").first,
         page.locator("[aria-label*='Discount' i], [aria-label*='Desconto' i]").first,
         page.locator("xpath=(//*[contains(translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'discount') or contains(translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'desconto')]/following::*[@role='combobox' or @aria-haspopup='listbox' or self::button][1])[1]").first,
         page.locator("[id^='select-']").first,
@@ -1295,12 +1293,22 @@ def click_discount_trigger(page: Page, selectors: list[list[str]]) -> None:
 
     clicked_via_dom = page.evaluate(
         """() => {
-            const textMatch = (el) => /discount|desconto/i.test((el?.textContent || '').trim());
-            const roots = Array.from(document.querySelectorAll('[id], form, section, div'));
-            for (const root of roots) {
-              if (!textMatch(root)) continue;
-              const target = root.querySelector('[role="combobox"], [aria-haspopup="listbox"], [id^="select-"], button');
-              if (target) { target.click(); return true; }
+            const isVisible = (node) => {
+              const style = window.getComputedStyle(node);
+              return style.display !== 'none' && style.visibility !== 'hidden' &&
+                Number(style.opacity || '1') > 0 && node.getClientRects().length > 0;
+            };
+            const labels = Array.from(document.querySelectorAll('label, span, div'))
+              .filter((node) => isVisible(node) && /^(discount|desconto)\\s*\\*?$/i.test(
+                (node.textContent || '').replace(/\\s+/g, ' ').trim()
+              ));
+            for (const label of labels) {
+              const root = label.closest('div, form, section') || label.parentElement;
+              const target = root?.querySelector(
+                '[id^="select-"], [aria-label*="Discount" i], [aria-label*="Desconto" i], '
+                '[role="combobox"]'
+              );
+              if (target && isVisible(target)) { target.click(); return true; }
             }
             return false;
         }"""
