@@ -12,12 +12,12 @@
         },
         {
             "type": "navigate",
-            "url": "https://www.cp.pt/pt",
+            "url": "https://www.cp.pt/en",
             "assertedEvents": [
                 {
                     "type": "navigation",
-                    "url": "https://www.cp.pt/pt",
-                    "title": "CP - Comboios de Portugal | Bilhetes de Comboio Online"
+                    "url": "https://www.cp.pt/en",
+                    "title": "CP - Comboios de Portugal | Online Train Tickets"
                 }
             ]
         },
@@ -174,7 +174,7 @@
             "assertedEvents": [
                 {
                     "type": "navigation",
-                    "url": "https://www.cp.pt/pt/login-check",
+                    "url": "https://www.cp.pt/en/login-check",
                     "title": ""
                 }
             ]
@@ -186,7 +186,7 @@
             "assertedEvents": [
                 {
                     "type": "navigation",
-                    "url": "https://www.cp.pt/pt/mycp",
+                    "url": "https://www.cp.pt/en/mycp",
                     "title": ""
                 }
             ]
