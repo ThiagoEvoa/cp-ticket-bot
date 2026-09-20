@@ -1089,7 +1089,7 @@ def is_optional_passenger_form_click(step: dict) -> bool:
     if step.get("type") != "click":
         return False
     selectors_blob = flatten_selectors(step.get("selectors", [])).lower()
-    if ":re:" not in selectors_blob:
+    if not re.search(r":r[a-z0-9]+:", selectors_blob):
         return False
     if "div:nth-of-type" not in selectors_blob and "xpath=" not in selectors_blob:
         return False
