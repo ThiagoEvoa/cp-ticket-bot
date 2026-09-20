@@ -1128,6 +1128,21 @@ def is_buy_trip_click(step: dict) -> bool:
 
 
 def click_buy_trip(page: Page, selectors: list[list[str]]) -> None:
+    # If Buy already opened the confirmation modal, continue with its next recorded step.
+    confirmation_button = first_visible_locator(
+        [
+            page.get_by_role(
+                "button", name=re.compile(r"proceed to purchase|prosseguir para compra", re.IGNORECASE)
+            ).first,
+            page.get_by_text(
+                re.compile(r"online ticket office sales conditions|condições de venda", re.IGNORECASE)
+            ).first,
+        ],
+        timeout_ms=800,
+    )
+    if confirmation_button is not None:
+        return
+
     candidates = selector_locators(page, selectors)
     candidates.extend(
         [
@@ -1144,10 +1159,45 @@ def click_buy_trip(page: Page, selectors: list[list[str]]) -> None:
             ).last,
         ]
     )
-    locator = first_visible_locator(candidates, timeout_ms=12000)
-    if locator is None:
-        raise RuntimeError("Could not find visible buy-trip button after departure selection.")
-    robust_click(page, locator)
+    locator = first_visible_locator(candidates, timeout_ms=2000)
+    if locator is not None:
+        robust_click(page, locator)
+        return
+
+    dom_result = page.evaluate(
+        """() => {
+            const isVisible = (node) => {
+              const style = window.getComputedStyle(node);
+              return style.display !== 'none' && style.visibility !== 'hidden' &&
+                Number(style.opacity || '1') > 0 && node.getClientRects().length > 0;
+            };
+            const matches = (node) => {
+              const text = (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').trim();
+              const label = node.getAttribute('aria-label') || '';
+              return /^(buy|buy this trip|comprar)$/i.test(text) ||
+                /buy this trip|comprar/i.test(label);
+            };
+            const nodes = Array.from(document.querySelectorAll('button, a, [role="button"]'));
+            const target = nodes.reverse().find((node) => isVisible(node) && matches(node));
+            if (!target) return null;
+            target.scrollIntoView({block: 'center', inline: 'center'});
+            target.click();
+            return {tag: target.tagName, text: (target.innerText || '').trim()};
+        }"""
+    )
+    if isinstance(dom_result, dict):
+        return
+
+    visible_controls = page.evaluate(
+        """() => Array.from(document.querySelectorAll('button, a, [role="button"]'))
+          .filter((node) => node.getClientRects().length > 0)
+          .map((node) => (node.innerText || node.getAttribute('aria-label') || '').replace(/\\s+/g, ' ').trim())
+          .filter(Boolean).slice(-20)"""
+    )
+    raise RuntimeError(
+        "Could not find visible buy-trip button after departure selection. "
+        f"Visible controls: {visible_controls}"
+    )
 
 
 def is_proceed_to_purchase_click(step: dict) -> bool:
