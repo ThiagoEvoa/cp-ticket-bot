@@ -522,16 +522,19 @@ def choose_departure_by_time(page: Page, desired_hhmm: str) -> None:
     target = time_to_minutes(desired_hhmm)
     start = time_mod.time()
     timeout_seconds = 90
-    candidate_indexes: list[int] = []
-    candidate_labels: list[str] = []
+    candidate_buttons: list[tuple[Locator, str]] = []
 
     while time_mod.time() - start < timeout_seconds:
         buttons = page.get_by_role("button")
         total = buttons.count()
-        candidate_indexes.clear()
-        candidate_labels.clear()
+        candidate_buttons.clear()
         for idx in range(total):
             button = buttons.nth(idx)
+            try:
+                if not button.is_visible():
+                    continue
+            except Error:
+                continue
             aria = (button.get_attribute("aria-label") or "").strip()
             text = ""
             try:
@@ -539,32 +542,35 @@ def choose_departure_by_time(page: Page, desired_hhmm: str) -> None:
             except Error:
                 pass
             combined = f"{aria} {text}".strip()
-            if first_time_from_label(combined) is not None:
-                candidate_indexes.append(idx)
-                candidate_labels.append(combined)
-        if candidate_indexes:
+            if first_time_from_label(combined) is None:
+                continue
+            if not re.search(r"select departure|selecionar partida", combined, re.IGNORECASE):
+                continue
+            candidate_buttons.append((button, combined))
+        if candidate_buttons:
             break
         time_mod.sleep(1)
 
-    if not candidate_indexes:
-        raise RuntimeError("No departure option buttons with time labels became visible.")
+    if not candidate_buttons:
+        raise RuntimeError("No visible departure-selection buttons with time labels became available.")
 
     # Strict: only exact requested time (or equivalent 12h representation).
-    for global_idx, label in zip(candidate_indexes, candidate_labels):
+    for button, label in candidate_buttons:
         dep_minutes = first_time_from_label(label)
         if dep_minutes is not None and dep_minutes == target:
-            robust_click(page, page.get_by_role("button").nth(global_idx))
+            robust_click(page, button)
             return
 
     for variant in to_12h_variants(desired_hhmm):
         pattern = re.compile(rf"\b{re.escape(variant)}\b", re.IGNORECASE)
-        for global_idx, label in zip(candidate_indexes, candidate_labels):
+        for button, label in candidate_buttons:
             if pattern.search(label):
-                robust_click(page, page.get_by_role("button").nth(global_idx))
+                robust_click(page, button)
                 return
 
     raise RuntimeError(
-        f"Requested departure '{desired_hhmm}' not found. Visible options: {', '.join(candidate_labels)}"
+        f"Requested departure '{desired_hhmm}' not found. Visible options: "
+        f"{', '.join(label for _, label in candidate_buttons)}"
     )
 
 
@@ -1454,6 +1460,7 @@ def run_flow_from_json(
 
             if should_handle_departure_selection(step):
                 choose_departure_by_time(page, cfg.departure_time.strftime("%H:%M"))
+                wait_for_settle(page, cfg)
                 if cfg.log_steps:
                     print(f"[{now_ts()}] [{flow_path.name}] step {index}/{len(steps)} ok departure selected")
                 continue
