@@ -1135,8 +1135,13 @@ def click_buy_trip(page: Page, selectors: list[list[str]]) -> None:
             page.locator("div.search-results-page__footer > button").first,
             page.get_by_role(
                 "button", name=re.compile(r"(buy this trip|buy|comprar)", re.IGNORECASE)
-            ).first,
-            page.locator("button:has-text('Buy'), button:has-text('Comprar')").first,
+            ).last,
+            page.get_by_text("Buy", exact=True).last,
+            page.get_by_text("Comprar", exact=True).last,
+            page.locator(
+                "a:has-text('Buy'), button:has-text('Buy'), [role='button']:has-text('Buy'), "
+                "a:has-text('Comprar'), button:has-text('Comprar'), [role='button']:has-text('Comprar')"
+            ).last,
         ]
     )
     locator = first_visible_locator(candidates, timeout_ms=12000)
