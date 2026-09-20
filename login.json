@@ -1,10 +1,10 @@
 {
-    "title": "CP-Login",
+    "title": "login",
     "steps": [
         {
             "type": "setViewport",
-            "width": 1158,
-            "height": 1000,
+            "width": 1350,
+            "height": 963,
             "deviceScaleFactor": 1,
             "isMobile": false,
             "hasTouch": false,
@@ -12,39 +12,12 @@
         },
         {
             "type": "navigate",
-            "url": "https://www.cp.pt/en",
+            "url": "https://www.cp.pt/pt",
             "assertedEvents": [
                 {
                     "type": "navigation",
-                    "url": "https://www.cp.pt/en",
-                    "title": "CP - Comboios de Portugal | Online Train Tickets"
-                }
-            ]
-        },
-        {
-            "type": "click",
-            "target": "main",
-            "selectors": [
-                [
-                    "aria/myCP profile"
-                ],
-                [
-                    "#menu-tabs-tabpane-Passengers button"
-                ],
-                [
-                    "xpath///*[@id=\"menu-tabs-tabpane-Passengers\"]/nav[2]/div/button"
-                ],
-                [
-                    "pierce/#menu-tabs-tabpane-Passengers button"
-                ]
-            ],
-            "offsetY": 18,
-            "offsetX": 30.15625,
-            "assertedEvents": [
-                {
-                    "type": "navigation",
-                    "url": "https://login.cp.pt/realms/cpclients/protocol/openid-connect/auth?client_id=websitecp&redirect_uri=https%3A%2F%2Fwww.cp.pt%2Fen%2Flogin-check&state=2a128782-3669-4f19-89f1-acbdde30b34b&response_mode=fragment&response_type=code&scope=openid&nonce=78b56caa-cf05-4c6f-aa9e-0958e8522e93&ui_locales=en&code_challenge=iECds7mc21xW1YBna7toaFWqV53_Lqnndap0ZekyMG0&code_challenge_method=S256",
-                    "title": "CP - Sign in to Autenticação CP"
+                    "url": "https://www.cp.pt/pt",
+                    "title": "CP - Comboios de Portugal | Bilhetes de Comboio Online"
                 }
             ]
         },
@@ -65,12 +38,12 @@
                     "pierce/#username"
                 ]
             ],
-            "offsetY": 16,
-            "offsetX": 107
+            "offsetY": 9,
+            "offsetX": 247.5
         },
         {
             "type": "change",
-            "value": "user@example.com",
+            "value": "configured-email",
             "selectors": [
                 [
                     "aria/Email"
@@ -94,7 +67,7 @@
         },
         {
             "type": "change",
-            "value": "user@example.com",
+            "value": "configured-email",
             "selectors": [
                 [
                     "aria/Email"
@@ -112,21 +85,31 @@
             "target": "main"
         },
         {
-            "type": "keyDown",
+            "type": "click",
             "target": "main",
-            "key": "Tab"
-        },
-        {
-            "type": "keyUp",
-            "key": "Tab",
-            "target": "main"
+            "selectors": [
+                [
+                    "aria/Palavra-passe"
+                ],
+                [
+                    "#password"
+                ],
+                [
+                    "xpath///*[@id=\"password\"]"
+                ],
+                [
+                    "pierce/#password"
+                ]
+            ],
+            "offsetY": 4,
+            "offsetX": 31.5
         },
         {
             "type": "change",
-            "value": "password-placeholder",
+            "value": "configured-password",
             "selectors": [
                 [
-                    "aria/Password"
+                    "aria/Palavra-passe"
                 ],
                 [
                     "#password"
@@ -147,10 +130,10 @@
         },
         {
             "type": "change",
-            "value": "password-placeholder",
+            "value": "configured-password",
             "selectors": [
                 [
-                    "aria/Password"
+                    "aria/Palavra-passe"
                 ],
                 [
                     "#password"
@@ -165,31 +148,25 @@
             "target": "main"
         },
         {
-            "type": "click",
+            "type": "keyDown",
             "target": "main",
-            "selectors": [
-                [
-                    "aria/Login now"
-                ],
-                [
-                    "#kc-login"
-                ],
-                [
-                    "xpath///*[@id=\"kc-login\"]"
-                ],
-                [
-                    "pierce/#kc-login"
-                ],
-                [
-                    "text/Login now"
-                ]
-            ],
-            "offsetY": 11,
-            "offsetX": 64.375,
+            "key": "Enter",
             "assertedEvents": [
                 {
                     "type": "navigation",
-                    "url": "https://www.cp.pt/en/login-check#state=2a128782-3669-4f19-89f1-acbdde30b34b&session_state=5c74e744-9915-4ec5-8cf9-ddb5b00e29f2&iss=https%3A%2F%2Flogin.cp.pt%2Frealms%2Fcpclients&code=f126a9b7-2f12-4f68-a711-5b19a31a4d9f.5c74e744-9915-4ec5-8cf9-ddb5b00e29f2.1433326e-9025-4aef-87ee-7eb40b26d91c",
+                    "url": "https://www.cp.pt/pt/login-check",
+                    "title": ""
+                }
+            ]
+        },
+        {
+            "type": "keyUp",
+            "key": "Enter",
+            "target": "main",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "https://www.cp.pt/pt/mycp",
                     "title": ""
                 }
             ]

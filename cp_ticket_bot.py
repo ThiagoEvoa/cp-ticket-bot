@@ -56,7 +56,7 @@ SCRIPT_SETTINGS = {
     "headless": True,
     "log_steps": True,
     "use_saved_session": True,
-    "session_state_path": ".cp_sessi on_state.json",
+    "session_state_path": ".cp_session_state.json",
     "ui_timeout_ms": 60000,
     "action_delay_ms": 120,
     "post_action_wait_ms": 250,
@@ -196,6 +196,7 @@ class BotConfig:
 @dataclass
 class RuntimeState:
     last_station_field: Optional[str] = None  # "from" | "to"
+    date_field_set: bool = False
 
 
 @dataclass(frozen=True)
@@ -1105,6 +1106,13 @@ def is_date_click(step: dict) -> bool:
     return "aria/Date" in selectors or "#ida" in selectors
 
 
+def is_search_trips_click(step: dict) -> bool:
+    if step.get("type") != "click":
+        return False
+    selectors = flatten_selectors(step.get("selectors", [])).lower()
+    return "aria/search trips" in selectors or "search-info" in selectors
+
+
 def is_final_confirm_click(step: dict) -> bool:
     if step.get("type") != "click":
         return False
@@ -1244,17 +1252,6 @@ def read_visible_discount_options(page: Page) -> list[str]:
 
 
 def detect_no_seats_and_raise(page: Page) -> None:
-    back_to_results = first_visible_locator(
-        [
-            page.get_by_role("button", name=re.compile(r"(back to results|voltar aos resultados)", re.IGNORECASE)).first,
-            page.get_by_text(re.compile(r"(back to results|voltar aos resultados)", re.IGNORECASE)).first,
-        ],
-        timeout_ms=3500,
-    )
-    if back_to_results is not None:
-        robust_click(page, back_to_results)
-        raise NoSeatsAvailableError("No seats available for selected trip (Back to results shown).")
-
     no_seat_message = first_visible_locator(
         [
             page.get_by_text(
@@ -1268,6 +1265,16 @@ def detect_no_seats_and_raise(page: Page) -> None:
     )
     if no_seat_message is not None:
         raise NoSeatsAvailableError("No seats available for selected trip.")
+
+    back_to_results = first_visible_locator(
+        [
+            page.get_by_role("button", name=re.compile(r"(back to results|voltar aos resultados)", re.IGNORECASE)).first,
+            page.get_by_text(re.compile(r"(back to results|voltar aos resultados)", re.IGNORECASE)).first,
+        ],
+        timeout_ms=3500,
+    )
+    if back_to_results is not None:
+        raise NoSeatsAvailableError("No seats available for selected trip (Back to results shown).")
 
 
 def click_discount_option(page: Page, discount_name: str) -> None:
@@ -1339,6 +1346,7 @@ def run_flow_from_json(
     start_index: int = 0,
     end_index: Optional[int] = None,
     preloaded_steps: Optional[list[dict]] = None,
+    detect_no_seats: bool = True,
 ) -> None:
     if preloaded_steps is None:
         raw = json.loads(flow_path.read_text(encoding="utf-8"))
@@ -1437,6 +1445,10 @@ def run_flow_from_json(
                 continue
 
             if step_type == "click":
+                if is_search_trips_click(step) and not state.date_field_set:
+                    set_date_field(page, travel_date)
+                    state.date_field_set = True
+
                 if is_station_option_click(step):
                     if cfg.log_steps:
                         print(f"[{now_ts()}] [{flow_path.name}] step {index}/{len(steps)} skip station option click")
@@ -1493,7 +1505,8 @@ def run_flow_from_json(
 
                 if is_date_click(step):
                     set_date_field(page, travel_date)
-                if is_proceed_to_purchase_click(step):
+                    state.date_field_set = True
+                if is_proceed_to_purchase_click(step) and detect_no_seats:
                     detect_no_seats_and_raise(page)
                 wait_for_settle(page, cfg)
                 if cfg.log_steps:
@@ -1564,11 +1577,19 @@ def is_session_authenticated(page: Page) -> bool:
     return True
 
 
-def run_purchase(login_flow: Path, ticket_flow: Path, cfg: BotConfig, travel_date: str) -> None:
+def run_purchase(
+    login_flow: Path,
+    ticket_flow: Path,
+    failure_flow: Path,
+    cfg: BotConfig,
+    travel_date: str,
+) -> None:
     state = RuntimeState()
     session_state_file = resolve_session_state_path(ticket_flow.parent, cfg.session_state_path)
     ticket_raw = json.loads(ticket_flow.read_text(encoding="utf-8"))
     ticket_steps = ticket_raw.get("steps", [])
+    failure_raw = json.loads(failure_flow.read_text(encoding="utf-8"))
+    failure_steps = failure_raw.get("steps", [])
     retry_window = find_no_seat_retry_window(ticket_steps)
 
     with sync_playwright() as playwright:
@@ -1624,6 +1645,26 @@ def run_purchase(login_flow: Path, ticket_flow: Path, cfg: BotConfig, travel_dat
                     break
                 except NoSeatsAvailableError:
                     first_pass = False
+                    if failure_steps:
+                        # Recorded failure flow returns CP to search results. Skip its stale
+                        # final navigation URL; next attempt supplies current SCRIPT_SETTINGS data.
+                        failure_end = len(failure_steps)
+                        if failure_steps[-1].get("type") == "navigate":
+                            failure_end -= 1
+                        try:
+                            run_flow_from_json(
+                                page,
+                                failure_flow,
+                                cfg,
+                                state,
+                                travel_date,
+                                end_index=failure_end,
+                                preloaded_steps=failure_steps,
+                                detect_no_seats=False,
+                            )
+                        except Exception as recovery_error:
+                            if cfg.log_steps:
+                                print(f"[{now_ts()}] Failure flow recovery skipped: {recovery_error}")
                     print(
                         f"[{now_ts()}] No seats available for {travel_date}. "
                         f"Retrying from results in {cfg.retry_interval_seconds}s."
@@ -1701,6 +1742,7 @@ def sleep_until(target: datetime) -> None:
 def run_with_retry(
     login_flow: Path,
     ticket_flow: Path,
+    failure_flow: Path,
     cfg: BotConfig,
     travel_date: str,
     handover_at: Optional[datetime] = None,
@@ -1731,7 +1773,7 @@ def run_with_retry(
                 f"[{datetime.now().isoformat(timespec='seconds')}] Attempt {attempt} started "
                 f"for travel date {travel_date}."
             )
-            run_purchase(login_flow, ticket_flow, cfg, travel_date)
+            run_purchase(login_flow, ticket_flow, failure_flow, cfg, travel_date)
             print(
                 f"[{datetime.now().isoformat(timespec='seconds')}] Purchase flow succeeded "
                 f"for travel date {travel_date}."
@@ -1760,13 +1802,16 @@ def run_with_retry(
 
 def main() -> int:
     root = Path(__file__).resolve().parent
-    login_flow = root / "CP-Login.json"
-    ticket_flow = root / "CP-ticket.json"
+    login_flow = root / "login.json"
+    ticket_flow = root / "buy-ticket.json"
+    failure_flow = root / "buy-ticket-fail.json"
 
     if not login_flow.exists():
         raise FileNotFoundError(f"Missing flow file: {login_flow}")
     if not ticket_flow.exists():
         raise FileNotFoundError(f"Missing flow file: {ticket_flow}")
+    if not failure_flow.exists():
+        raise FileNotFoundError(f"Missing flow file: {failure_flow}")
 
     cfg = BotConfig.from_script_settings()
     settled_dates: set[date] = set()
@@ -1795,6 +1840,7 @@ def main() -> int:
                 success = run_with_retry(
                     login_flow,
                     ticket_flow,
+                    failure_flow,
                     cfg,
                     item.travel_date_str,
                     handover_at=handover_at,

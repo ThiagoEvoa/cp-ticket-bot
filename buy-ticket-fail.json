@@ -1,0 +1,330 @@
+{
+    "title": "buy-ticket-fail",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 1350,
+            "height": 963,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "url": "https://www.cp.pt/en/",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "https://www.cp.pt/en/",
+                    "title": "CP - Comboios de Portugal | Online Train Tickets"
+                }
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/From *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r3\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r3:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r3\\:"
+                ]
+            ],
+            "offsetY": 19,
+            "offsetX": 187.984375
+        },
+        {
+            "type": "change",
+            "value": "configured-origin-query",
+            "selectors": [
+                [
+                    "aria/From *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r3\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r3:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r3\\:"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/To *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r4\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r4:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r4\\:"
+                ]
+            ],
+            "offsetY": 23,
+            "offsetX": 112.984375
+        },
+        {
+            "type": "change",
+            "value": "configured-destination-query",
+            "selectors": [
+                [
+                    "aria/To *[role=\"textbox\"]"
+                ],
+                [
+                    "#input-\\:r4\\:"
+                ],
+                [
+                    "xpath///*[@id=\"input-:r4:\"]"
+                ],
+                [
+                    "pierce/#input-\\:r4\\:"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Entroncamento",
+                    "aria/[role=\"generic\"]"
+                ],
+                [
+                    "#react-autowhatever-\\:r4\\: div"
+                ],
+                [
+                    "xpath///*[@id=\"react-autowhatever-:r4:--item-0\"]/div"
+                ],
+                [
+                    "pierce/#react-autowhatever-\\:r4\\: div"
+                ],
+                [
+                    "text/Entroncamento"
+                ]
+            ],
+            "offsetY": 15,
+            "offsetX": 90.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Date"
+                ],
+                [
+                    "#ida"
+                ],
+                [
+                    "xpath///*[@id=\"ida\"]"
+                ],
+                [
+                    "pierce/#ida"
+                ],
+                [
+                    "text/20/09/2026"
+                ]
+            ],
+            "offsetY": 28,
+            "offsetX": 82.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Choose Monday, September 21st, 2026"
+                ],
+                [
+                    "div.react-datepicker__day--021"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[1]/div/div/div/div/div[2]/form/div[2]/div/div[3]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[4]/div[2]"
+                ],
+                [
+                    "pierce/div.react-datepicker__day--021"
+                ],
+                [
+                    "text/21"
+                ]
+            ],
+            "offsetY": 11.03125,
+            "offsetX": 12.484375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Search trips"
+                ],
+                [
+                    "div.pesquisa-de-viagens__content__controls__form__search-info > button"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[1]/div/div/div/div/div[2]/form/div[2]/button"
+                ],
+                [
+                    "pierce/div.pesquisa-de-viagens__content__controls__form__search-info > button"
+                ]
+            ],
+            "offsetY": 24,
+            "offsetX": 49.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Select departure from 17:30 to 18:32"
+                ],
+                [
+                    "li:nth-of-type(25) > div.search-results-page__results-list__result-item__footer > button"
+                ],
+                [
+                    "xpath///*[@id=\":r8:\"]/div/div/div/ul/li[25]/div[3]/button"
+                ],
+                [
+                    "pierce/li:nth-of-type(25) > div.search-results-page__results-list__result-item__footer > button"
+                ]
+            ],
+            "offsetY": 22,
+            "offsetX": 69.390625
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Buy this trip (opens new modal window)"
+                ],
+                [
+                    "#buyTripNavBar button"
+                ],
+                [
+                    "xpath///*[@id=\"buyTripNavBar\"]/div[2]/button"
+                ],
+                [
+                    "pierce/#buyTripNavBar button"
+                ],
+                [
+                    "text/Buy"
+                ]
+            ],
+            "offsetY": 21,
+            "offsetX": 36.1875
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "div.modal-footer span"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[3]/div/div[3]/div[2]/label/span"
+                ],
+                [
+                    "pierce/div.modal-footer span"
+                ]
+            ],
+            "offsetY": 17.84375,
+            "offsetX": 25.5
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Confirm: I have read and accept the Online Ticket Office Sales Conditions. I have read and accept the Terms and Privacy Policy. I am over 16 years old."
+                ],
+                [
+                    "#checkbox-\\:rb\\:"
+                ],
+                [
+                    "xpath///*[@id=\"checkbox-:rb:\"]"
+                ],
+                [
+                    "pierce/#checkbox-\\:rb\\:"
+                ]
+            ],
+            "offsetY": 11.84375,
+            "offsetX": 25.5
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Proceed to purchase"
+                ],
+                [
+                    "div.modal-footer > button"
+                ],
+                [
+                    "xpath///*[@id=\"main\"]/div/div[3]/div/div[3]/button"
+                ],
+                [
+                    "pierce/div.modal-footer > button"
+                ],
+                [
+                    "text/Proceed to purchase"
+                ]
+            ],
+            "offsetY": 27.84375,
+            "offsetX": 145.5
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Back to results"
+                ],
+                [
+                    "button.button-custom-primary"
+                ],
+                [
+                    "xpath///*[@id=\":rc:\"]/div/div/div/div/div/button[2]"
+                ],
+                [
+                    "pierce/button.button-custom-primary"
+                ],
+                [
+                    "text/Back to results"
+                ]
+            ],
+            "offsetY": 25.875,
+            "offsetX": 108.78125
+        },
+        {
+            "type": "navigate",
+            "url": "https://www.cp.pt/en/resultado-pesquisa",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "https://www.cp.pt/en/resultado-pesquisa",
+                    "title": "CP search results"
+                }
+            ]
+        }
+    ]
+}

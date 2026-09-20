@@ -1,10 +1,10 @@
 {
-    "title": "CP-ticket",
+    "title": "buy-ticket",
     "steps": [
         {
             "type": "setViewport",
-            "width": 1158,
-            "height": 1000,
+            "width": 1350,
+            "height": 963,
             "deviceScaleFactor": 1,
             "isMobile": false,
             "hasTouch": false,
@@ -12,42 +12,12 @@
         },
         {
             "type": "navigate",
-            "url": "https://www.cp.pt/en/mycp",
+            "url": "https://www.cp.pt/en/",
             "assertedEvents": [
                 {
                     "type": "navigation",
-                    "url": "https://www.cp.pt/en/mycp",
-                    "title": "myCP - Personal Area | CP - Comboios de Portugal"
-                }
-            ]
-        },
-        {
-            "type": "click",
-            "target": "main",
-            "selectors": [
-                [
-                    "aria/Begin"
-                ],
-                [
-                    "div.breadcrumb-custom-container a"
-                ],
-                [
-                    "xpath///*[@id=\"main\"]/div/div[1]/nav/span[1]/a"
-                ],
-                [
-                    "pierce/div.breadcrumb-custom-container a"
-                ],
-                [
-                    "text/Begin"
-                ]
-            ],
-            "offsetY": 11,
-            "offsetX": 27,
-            "assertedEvents": [
-                {
-                    "type": "navigation",
-                    "url": "https://www.cp.pt/",
-                    "title": ""
+                    "url": "https://www.cp.pt/en/",
+                    "title": "CP - Comboios de Portugal | Online Train Tickets"
                 }
             ]
         },
@@ -59,33 +29,33 @@
                     "aria/From *[role=\"textbox\"]"
                 ],
                 [
-                    "#input-\\:r3\\:"
+                    "#input-\\:r18\\:"
                 ],
                 [
-                    "xpath///*[@id=\"input-:r3:\"]"
+                    "xpath///*[@id=\"input-:r18:\"]"
                 ],
                 [
-                    "pierce/#input-\\:r3\\:"
+                    "pierce/#input-\\:r18\\:"
                 ]
             ],
-            "offsetY": 27,
-            "offsetX": 137.984375
+            "offsetY": 22,
+            "offsetX": 155.984375
         },
         {
             "type": "change",
-            "value": "origin-station-placeholder",
+            "value": "configured-origin-query",
             "selectors": [
                 [
                     "aria/From *[role=\"textbox\"]"
                 ],
                 [
-                    "#input-\\:r3\\:"
+                    "#input-\\:r18\\:"
                 ],
                 [
-                    "xpath///*[@id=\"input-:r3:\"]"
+                    "xpath///*[@id=\"input-:r18:\"]"
                 ],
                 [
-                    "pierce/#input-\\:r3\\:"
+                    "pierce/#input-\\:r18\\:"
                 ]
             ],
             "target": "main"
@@ -99,20 +69,20 @@
                     "aria/[role=\"generic\"]"
                 ],
                 [
-                    "#react-autowhatever-\\:r3\\:--item-2 > div"
+                    "#react-autowhatever-\\:r18\\: div"
                 ],
                 [
-                    "xpath///*[@id=\"react-autowhatever-:r3:--item-2\"]/div"
+                    "xpath///*[@id=\"react-autowhatever-:r18:--item-0\"]/div"
                 ],
                 [
-                    "pierce/#react-autowhatever-\\:r3\\:--item-2 > div"
+                    "pierce/#react-autowhatever-\\:r18\\: div"
                 ],
                 [
                     "text/Lisboa Santa"
                 ]
             ],
-            "offsetY": 15,
-            "offsetX": 116.984375
+            "offsetY": 12,
+            "offsetX": 145.984375
         },
         {
             "type": "click",
@@ -122,33 +92,33 @@
                     "aria/To *[role=\"textbox\"]"
                 ],
                 [
-                    "#input-\\:r4\\:"
+                    "#input-\\:r19\\:"
                 ],
                 [
-                    "xpath///*[@id=\"input-:r4:\"]"
+                    "xpath///*[@id=\"input-:r19:\"]"
                 ],
                 [
-                    "pierce/#input-\\:r4\\:"
+                    "pierce/#input-\\:r19\\:"
                 ]
             ],
-            "offsetY": 23,
-            "offsetX": 131.984375
+            "offsetY": 24,
+            "offsetX": 100.984375
         },
         {
             "type": "change",
-            "value": "destination-station-placeholder",
+            "value": "configured-destination-query",
             "selectors": [
                 [
                     "aria/To *[role=\"textbox\"]"
                 ],
                 [
-                    "#input-\\:r4\\:"
+                    "#input-\\:r19\\:"
                 ],
                 [
-                    "xpath///*[@id=\"input-:r4:\"]"
+                    "xpath///*[@id=\"input-:r19:\"]"
                 ],
                 [
-                    "pierce/#input-\\:r4\\:"
+                    "pierce/#input-\\:r19\\:"
                 ]
             ],
             "target": "main"
@@ -162,63 +132,20 @@
                     "aria/[role=\"generic\"]"
                 ],
                 [
-                    "#react-autowhatever-\\:r4\\: div"
+                    "#react-autowhatever-\\:r19\\: div"
                 ],
                 [
-                    "xpath///*[@id=\"react-autowhatever-:r4:--item-0\"]/div"
+                    "xpath///*[@id=\"react-autowhatever-:r19:--item-0\"]/div"
                 ],
                 [
-                    "pierce/#react-autowhatever-\\:r4\\: div"
+                    "pierce/#react-autowhatever-\\:r19\\: div"
                 ],
                 [
                     "text/Entroncamento"
                 ]
             ],
-            "offsetY": 9,
-            "offsetX": 131.984375
-        },
-        {
-            "type": "click",
-            "target": "main",
-            "selectors": [
-                [
-                    "aria/Date"
-                ],
-                [
-                    "#ida"
-                ],
-                [
-                    "xpath///*[@id=\"ida\"]"
-                ],
-                [
-                    "pierce/#ida"
-                ],
-                [
-                    "text/31/08/2026"
-                ]
-            ],
-            "offsetY": 26,
-            "offsetX": 85.984375
-        },
-        {
-            "type": "click",
-            "target": "main",
-            "selectors": [
-                [
-                    "aria/Choose Tuesday, September 1st, 2026"
-                ],
-                [
-                    "div:nth-of-type(6) > div.react-datepicker__day--001"
-                ],
-                [
-                    "xpath///*[@id=\"main\"]/div/div[1]/div/div/div/div/div[2]/form/div[2]/div/div[3]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[6]/div[3]"
-                ],
-                [
-                    "pierce/div:nth-of-type(6) > div.react-datepicker__day--001"
-                ]
-            ],
-            "offsetY": 16.0625,
-            "offsetX": 5.015625
+            "offsetY": 10,
+            "offsetX": 64.984375
         },
         {
             "type": "click",
@@ -237,8 +164,25 @@
                     "pierce/div.pesquisa-de-viagens__content__controls__form__search-info > button"
                 ]
             ],
-            "offsetY": 21,
-            "offsetX": 57.984375
+            "offsetY": 25,
+            "offsetX": 26.984375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "li:nth-of-type(3) div.line-icons > div"
+                ],
+                [
+                    "xpath///*[@id=\":r1c:\"]/div/div/div/ul/li[3]/div[2]/div[1]/div[2]/div[1]/div"
+                ],
+                [
+                    "pierce/li:nth-of-type(3) div.line-icons > div"
+                ]
+            ],
+            "offsetY": 7.530029296875,
+            "offsetX": 7.9140625
         },
         {
             "type": "click",
@@ -251,14 +195,14 @@
                     "li:nth-of-type(3) > div.search-results-page__results-list__result-item__footer > button"
                 ],
                 [
-                    "xpath///*[@id=\":r8:\"]/div/div/div/ul/li[3]/div[3]/button"
+                    "xpath///*[@id=\":r1c:\"]/div/div/div/ul/li[3]/div[3]/button"
                 ],
                 [
                     "pierce/li:nth-of-type(3) > div.search-results-page__results-list__result-item__footer > button"
                 ]
             ],
-            "offsetY": 29,
-            "offsetX": 587
+            "offsetY": 24,
+            "offsetX": 60.390625
         },
         {
             "type": "click",
@@ -268,20 +212,20 @@
                     "aria/Buy this trip (opens new modal window)"
                 ],
                 [
-                    "div.search-results-page__footer > button"
+                    "#buyTripNavBar button"
                 ],
                 [
-                    "xpath///*[@id=\"buyTripNavBar\"]"
+                    "xpath///*[@id=\"buyTripNavBar\"]/div[2]/button"
                 ],
                 [
-                    "pierce/div.search-results-page__footer > button"
+                    "pierce/#buyTripNavBar button"
                 ],
                 [
                     "text/Buy"
                 ]
             ],
-            "offsetY": 22,
-            "offsetX": 55
+            "offsetY": 29,
+            "offsetX": 23.1875
         },
         {
             "type": "click",
@@ -297,8 +241,8 @@
                     "pierce/div.modal-footer span"
                 ]
             ],
-            "offsetY": 11,
-            "offsetX": 22
+            "offsetY": 9.84375,
+            "offsetX": 15.5
         },
         {
             "type": "click",
@@ -308,17 +252,17 @@
                     "aria/Confirm: I have read and accept the Online Ticket Office Sales Conditions. I have read and accept the Terms and Privacy Policy. I am over 16 years old."
                 ],
                 [
-                    "#checkbox-\\:rb\\:"
+                    "#checkbox-\\:r1f\\:"
                 ],
                 [
-                    "xpath///*[@id=\"checkbox-:rb:\"]"
+                    "xpath///*[@id=\"checkbox-:r1f:\"]"
                 ],
                 [
-                    "pierce/#checkbox-\\:rb\\:"
+                    "pierce/#checkbox-\\:r1f\\:"
                 ]
             ],
-            "offsetY": 5,
-            "offsetX": 22
+            "offsetY": 3.84375,
+            "offsetX": 15.5
         },
         {
             "type": "click",
@@ -340,8 +284,8 @@
                     "text/Proceed to purchase"
                 ]
             ],
-            "offsetY": 20,
-            "offsetX": 184
+            "offsetY": 19.84375,
+            "offsetX": 198.5
         },
         {
             "type": "click",
@@ -352,17 +296,17 @@
                     "aria/[role=\"image\"]"
                 ],
                 [
-                    "div:nth-of-type(4) img"
+                    "#root div:nth-of-type(4) img"
                 ],
                 [
-                    "xpath///*[@id=\"select-:rj:\"]/img"
+                    "xpath///*[@id=\"select-:r1n:\"]/img"
                 ],
                 [
-                    "pierce/div:nth-of-type(4) img"
+                    "pierce/#root div:nth-of-type(4) img"
                 ]
             ],
-            "offsetY": 12,
-            "offsetX": 13
+            "offsetY": 6,
+            "offsetX": 15.671875
         },
         {
             "type": "click",
@@ -372,20 +316,20 @@
                     "aria/Rail Green Pass"
                 ],
                 [
-                    "#select-option-\\:rj\\:-2"
+                    "#select-option-\\:r1n\\:-2"
                 ],
                 [
-                    "xpath///*[@id=\"select-option-:rj:-2\"]"
+                    "xpath///*[@id=\"select-option-:r1n:-2\"]"
                 ],
                 [
-                    "pierce/#select-option-\\:rj\\:-2"
+                    "pierce/#select-option-\\:r1n\\:-2"
                 ],
                 [
                     "text/Rail Green Pass"
                 ]
             ],
-            "offsetY": 17,
-            "offsetX": 267
+            "offsetY": 10,
+            "offsetX": 240
         },
         {
             "type": "click",
@@ -395,33 +339,33 @@
                     "aria/Additional information *"
                 ],
                 [
-                    "#input-\\:rp\\:"
+                    "#input-\\:r1t\\:"
                 ],
                 [
-                    "xpath///*[@id=\"input-:rp:\"]"
+                    "xpath///*[@id=\"input-:r1t:\"]"
                 ],
                 [
-                    "pierce/#input-\\:rp\\:"
+                    "pierce/#input-\\:r1t\\:"
                 ]
             ],
-            "offsetY": 31,
-            "offsetX": 88
+            "offsetY": 33,
+            "offsetX": 111.671875
         },
         {
             "type": "change",
-            "value": "additional-info-placeholder",
+            "value": "configured-additional-info",
             "selectors": [
                 [
                     "aria/Additional information *"
                 ],
                 [
-                    "#input-\\:rp\\:"
+                    "#input-\\:r1t\\:"
                 ],
                 [
-                    "xpath///*[@id=\"input-:rp:\"]"
+                    "xpath///*[@id=\"input-:r1t:\"]"
                 ],
                 [
-                    "pierce/#input-\\:rp\\:"
+                    "pierce/#input-\\:r1t\\:"
                 ]
             ],
             "target": "main"
@@ -431,17 +375,17 @@
             "target": "main",
             "selectors": [
                 [
-                    "#\\:re\\: div:nth-of-type(5) > div:nth-of-type(2)"
+                    "#\\:r1i\\: div:nth-of-type(5) > div:nth-of-type(2)"
                 ],
                 [
-                    "xpath///*[@id=\":re:\"]/div/div/div/div[1]/form/div[1]/div[1]/div[2]/div[5]/div[2]"
+                    "xpath///*[@id=\":r1i:\"]/div/div/div/div[1]/form/div[1]/div[1]/div[2]/div[5]/div[2]"
                 ],
                 [
-                    "pierce/#\\:re\\: div:nth-of-type(5) > div:nth-of-type(2)"
+                    "pierce/#\\:r1i\\: div:nth-of-type(5) > div:nth-of-type(2)"
                 ]
             ],
-            "offsetY": 19,
-            "offsetX": 241
+            "offsetY": 14,
+            "offsetX": 156.671875
         },
         {
             "type": "click",
@@ -454,7 +398,7 @@
                     "button.button-custom-primary"
                 ],
                 [
-                    "xpath///*[@id=\":re:\"]/div/div/div/div[1]/form/div[2]/button[2]"
+                    "xpath///*[@id=\":r1i:\"]/div/div/div/div[1]/form/div[2]/button[2]"
                 ],
                 [
                     "pierce/button.button-custom-primary"
@@ -463,8 +407,8 @@
                     "text/Next"
                 ]
             ],
-            "offsetY": 32,
-            "offsetX": 747
+            "offsetY": 22,
+            "offsetX": 63.34375
         },
         {
             "type": "click",
@@ -486,8 +430,8 @@
                     "text/Next"
                 ]
             ],
-            "offsetY": 32.375,
-            "offsetX": 89
+            "offsetY": 27.375,
+            "offsetX": 105.34375
         },
         {
             "type": "click",
@@ -500,7 +444,7 @@
                     "div.modal-confirmation-place__nextBtn-container > button"
                 ],
                 [
-                    "xpath///*[@id=\":re:\"]/div/div/div/div[1]/div[2]/div/div[2]/button"
+                    "xpath///*[@id=\":r1i:\"]/div/div/div/div[1]/div[2]/div/div[2]/button"
                 ],
                 [
                     "pierce/div.modal-confirmation-place__nextBtn-container > button"
@@ -509,8 +453,8 @@
                     "text/Proceed to payment"
                 ]
             ],
-            "offsetY": 22.375,
-            "offsetX": 103.40625
+            "offsetY": 24.375,
+            "offsetX": 108.90625
         },
         {
             "type": "click",
@@ -523,14 +467,14 @@
                     "button.button-custom-primary"
                 ],
                 [
-                    "xpath///*[@id=\":re:\"]/div/div/div/div[2]/div/div[3]/div[2]/button[2]"
+                    "xpath///*[@id=\":r1i:\"]/div/div/div/div[1]/div/div[3]/button[2]"
                 ],
                 [
                     "pierce/button.button-custom-primary"
                 ]
             ],
-            "offsetY": 26.390625,
-            "offsetX": 597
+            "offsetY": 25,
+            "offsetX": 73.34375
         }
     ]
 }

@@ -7,8 +7,9 @@
 Keep these files in same folder:
 
 - `cp_ticket_bot.py`
-- `CP-Login.json`
-- `CP-ticket.json`
+- `login.json`
+- `buy-ticket.json`
+- `buy-ticket-fail.json`
 
 ## 2. Configure script
 
@@ -66,7 +67,7 @@ CP rule handled by bot:
 
 - For each `travel_weekdays` + `departure_time`, first attempt starts **1 day before** at same hour.
 - Example: travel Tuesday `17:30` -> first buy attempt Monday `17:30`.
-- If flow fails (including no seats), bot retries every `retry_interval_seconds` until success.
+- If `buy-ticket.json` reports no seats, bot runs `buy-ticket-fail.json` to return to results, then retries every `retry_interval_seconds` until success.
 
 ## 4. Install
 
