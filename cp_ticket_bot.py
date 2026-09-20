@@ -1120,6 +1120,31 @@ def is_final_confirm_click(step: dict) -> bool:
     return "aria/Confirm" in selectors
 
 
+def is_buy_trip_click(step: dict) -> bool:
+    if step.get("type") != "click":
+        return False
+    selectors = flatten_selectors(step.get("selectors", [])).lower()
+    return "buy this trip" in selectors or "buytripnavbar" in selectors or "text/buy" in selectors
+
+
+def click_buy_trip(page: Page, selectors: list[list[str]]) -> None:
+    candidates = selector_locators(page, selectors)
+    candidates.extend(
+        [
+            page.locator("#buyTripNavBar button").first,
+            page.locator("div.search-results-page__footer > button").first,
+            page.get_by_role(
+                "button", name=re.compile(r"(buy this trip|buy|comprar)", re.IGNORECASE)
+            ).first,
+            page.locator("button:has-text('Buy'), button:has-text('Comprar')").first,
+        ]
+    )
+    locator = first_visible_locator(candidates, timeout_ms=12000)
+    if locator is None:
+        raise RuntimeError("Could not find visible buy-trip button after departure selection.")
+    robust_click(page, locator)
+
+
 def is_proceed_to_purchase_click(step: dict) -> bool:
     if step.get("type") != "click":
         return False
@@ -1448,6 +1473,13 @@ def run_flow_from_json(
                 if is_search_trips_click(step) and not state.date_field_set:
                     set_date_field(page, travel_date)
                     state.date_field_set = True
+
+                if is_buy_trip_click(step):
+                    click_buy_trip(page, selectors)
+                    if cfg.log_steps:
+                        print(f"[{now_ts()}] [{flow_path.name}] step {index}/{len(steps)} ok buy-trip clicked")
+                    wait_for_settle(page, cfg)
+                    continue
 
                 if is_station_option_click(step):
                     if cfg.log_steps:
