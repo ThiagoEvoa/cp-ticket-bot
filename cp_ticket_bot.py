@@ -1647,6 +1647,16 @@ def find_no_seat_retry_window(steps: list[dict]) -> Optional[tuple[int, int]]:
     return None
 
 
+def find_back_to_results_step(steps: list[dict]) -> Optional[int]:
+    for idx, step in enumerate(steps):
+        if step.get("type") != "click":
+            continue
+        selectors = flatten_selectors(step.get("selectors", [])).lower()
+        if "back to results" in selectors or "voltar aos resultados" in selectors:
+            return idx
+    return None
+
+
 def resolve_session_state_path(flow_root: Path, configured_path: str) -> Path:
     path = Path(configured_path).expanduser()
     if path.is_absolute():
@@ -1685,6 +1695,7 @@ def run_purchase(
     failure_raw = json.loads(failure_flow.read_text(encoding="utf-8"))
     failure_steps = failure_raw.get("steps", [])
     retry_window = find_no_seat_retry_window(ticket_steps)
+    failure_back_index = find_back_to_results_step(failure_steps)
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=cfg.headless, slow_mo=cfg.action_delay_ms)
@@ -1739,26 +1750,26 @@ def run_purchase(
                     break
                 except NoSeatsAvailableError:
                     first_pass = False
-                    if failure_steps:
-                        # Recorded failure flow returns CP to search results. Skip its stale
-                        # final navigation URL; next attempt supplies current SCRIPT_SETTINGS data.
-                        failure_end = len(failure_steps)
-                        if failure_steps[-1].get("type") == "navigate":
-                            failure_end -= 1
+                    if failure_back_index is not None:
                         try:
+                            # Current page is already at no-seat modal. Use only recorded
+                            # Back to results step; retry ticket flow from departure selection.
                             run_flow_from_json(
                                 page,
                                 failure_flow,
                                 cfg,
                                 state,
                                 travel_date,
-                                end_index=failure_end,
+                                start_index=failure_back_index,
+                                end_index=failure_back_index + 1,
                                 preloaded_steps=failure_steps,
                                 detect_no_seats=False,
                             )
                         except Exception as recovery_error:
                             if cfg.log_steps:
-                                print(f"[{now_ts()}] Failure flow recovery skipped: {recovery_error}")
+                                print(f"[{now_ts()}] Back-to-results recovery skipped: {recovery_error}")
+                    else:
+                        raise RuntimeError("Failure flow has no Back to results step.")
                     print(
                         f"[{now_ts()}] No seats available for {travel_date}. "
                         f"Retrying from results in {cfg.retry_interval_seconds}s."
