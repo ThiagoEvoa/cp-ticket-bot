@@ -75,15 +75,51 @@ CP rule handled by bot:
 
 ### Raspberry Pi (Raspberry Pi OS / Debian-based Linux)
 
+Run install steps once, from project directory:
+
 ```bash
 sudo apt update
 sudo apt install -y python3 python3-pip python3-venv
 python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python -m playwright install chromium
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python -m playwright install chromium
 ```
+
+To start bot automatically after every reboot, create a systemd service. Replace `/home/pi/cp-ticket-bot` with project’s absolute path and `pi` with your Linux username:
+
+```bash
+sudo tee /etc/systemd/system/cp-ticket-bot.service >/dev/null <<'EOF'
+[Unit]
+Description=CP Ticket Bot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/cp-ticket-bot
+ExecStart=/home/pi/cp-ticket-bot/.venv/bin/python /home/pi/cp-ticket-bot/cp_ticket_bot.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable --now cp-ticket-bot
+```
+
+Check status/logs and manage service:
+
+```bash
+sudo systemctl status cp-ticket-bot
+sudo journalctl -u cp-ticket-bot -f
+sudo systemctl restart cp-ticket-bot
+sudo systemctl disable --now cp-ticket-bot
+```
+
+Keep credentials secure: `cp_ticket_bot.py` contains login details. Restrict access to project files (`chmod 700 /home/pi/cp-ticket-bot`; `chmod 600 /home/pi/cp-ticket-bot/cp_ticket_bot.py`).
 
 ### macOS
 
