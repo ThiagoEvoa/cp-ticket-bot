@@ -86,10 +86,15 @@ python3 -m venv .venv
 .venv/bin/python -m playwright install chromium
 ```
 
-To start bot automatically after every reboot, create a systemd service. Replace `/home/pi/cp-ticket-bot` with project’s absolute path and `pi` with your Linux username:
+To start bot automatically after every reboot, run following **as account that owns project, from project directory** (not inside `sudo -s`). Commands detect actual username and absolute path; do not copy placeholder paths into service. Check path has no spaces and `.venv` exists before installing unit:
 
 ```bash
-sudo tee /etc/systemd/system/cp-ticket-bot.service >/dev/null <<'EOF'
+APP_DIR="$(pwd -P)"
+SERVICE_USER="$(id -un)"
+printf 'User=%s\nProject=%s\n' "$SERVICE_USER" "$APP_DIR"
+ls -l "$APP_DIR/.venv/bin/python" "$APP_DIR/cp_ticket_bot.py"
+
+sudo tee /etc/systemd/system/cp-ticket-bot.service >/dev/null <<EOF
 [Unit]
 Description=CP Ticket Bot
 Wants=network-online.target
@@ -97,9 +102,12 @@ After=network-online.target
 
 [Service]
 Type=simple
-User=pi
-WorkingDirectory=/home/pi/cp-ticket-bot
-ExecStart=/home/pi/cp-ticket-bot/.venv/bin/python /home/pi/cp-ticket-bot/cp_ticket_bot.py
+User=$SERVICE_USER
+WorkingDirectory=$APP_DIR
+ExecStart=$APP_DIR/.venv/bin/python $APP_DIR/cp_ticket_bot.py
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=journal
+StandardError=journal
 Restart=on-failure
 RestartSec=10
 
@@ -107,19 +115,23 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload
-sudo systemctl enable --now cp-ticket-bot
+sudo systemctl enable cp-ticket-bot
+sudo systemctl restart cp-ticket-bot
 ```
 
-Check status/logs and manage service:
+`log_steps=True` in `SCRIPT_SETTINGS` prints flow steps; `PYTHONUNBUFFERED=1` makes them appear promptly in journal. systemd only captures messages script actually prints. Check status/logs and manage service:
 
 ```bash
 sudo systemctl status cp-ticket-bot
 sudo journalctl -u cp-ticket-bot -f
+sudo journalctl -u cp-ticket-bot -n 100 --no-pager
 sudo systemctl restart cp-ticket-bot
 sudo systemctl disable --now cp-ticket-bot
 ```
 
-Keep credentials secure: `cp_ticket_bot.py` contains login details. Restrict access to project files (`chmod 700 /home/pi/cp-ticket-bot`; `chmod 600 /home/pi/cp-ticket-bot/cp_ticket_bot.py`).
+If service fails with `217/USER`, verify `User=` exists (`getent passwd "$(id -un)"`). For `203/EXEC`, check `ExecStart=` points to real executable (`ls -l "$(pwd -P)/.venv/bin/python"`); `/actual/path/...` is not a real path. Inspect installed unit with `sudo systemctl cat cp-ticket-bot`. After correcting it, run `sudo systemctl daemon-reload && sudo systemctl restart cp-ticket-bot`.
+
+Keep credentials secure: `cp_ticket_bot.py` contains login details. From project directory, restrict access to project files (`chmod 700 "$(pwd -P)"`; `chmod 600 "$(pwd -P)/cp_ticket_bot.py"`).
 
 ### macOS
 
